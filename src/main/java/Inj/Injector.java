@@ -7,6 +7,10 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.Properties;
 
+/**
+ * Class which is implementing dependency injection based on given
+ * @author
+ */
 public class Injector {
     private Properties properties;
 
@@ -15,6 +19,16 @@ public class Injector {
         properties.load(new FileInputStream(new File(path)));
     }
 
+    /**
+     * Method that makes injection
+     * @param obj - object
+     * @param <T> - object class
+     * @return - new instance of initial object with injected dependencies, cast to its class
+     * @throws IOException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws ClassNotFoundException
+     */
     public <T> T inject(T obj) throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         Class<? extends Object> ob = obj.getClass();
         Field[] fields = ob.getDeclaredFields();
