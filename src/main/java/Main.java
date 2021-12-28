@@ -9,8 +9,8 @@ import java.util.Properties;
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         String[] paths = {
-                "C:\\Users\\leoni\\Documents\\University\\Java applications\\Reflection\\src\\main\\resources\\data.properties",
-                "C:\\Users\\leoni\\Documents\\University\\Java applications\\Reflection\\src\\main\\resources\\data1.properties"
+                "C:\\Users\\Леонид\\Desktop\\Reflection\\src\\main\\resources\\data.properties",
+                "C:\\Users\\Леонид\\Desktop\\Reflection\\src\\main\\resources\\data1.properties"
         };
 
         for(int i = 0; i <paths.length; i++) {

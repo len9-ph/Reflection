@@ -2,35 +2,31 @@ package Inj;
 
 import annotations.AutoInjectable;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.Properties;
 
 public class Injector {
-    private File prop;
+    private Properties properties;
 
-    public Injector(String path) {
-        this.prop = new File(path);
+    public Injector(String path) throws IOException {
+        properties = new Properties();
+        properties.load(new FileInputStream(new File(path)));
     }
 
     public <T> T inject(T obj) throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-        Properties properties = new Properties();
-        properties.load(new FileReader(prop));
-
-        Class objClass = obj.getClass();
-        Object newInstance = objClass.getClass();
-        Field[] fields = objClass.getDeclaredFields();
+        Class<? extends Object> ob = obj.getClass();
+        Field[] fields = ob.getDeclaredFields();
         for(Field field : fields) {
             Annotation annotation = field.getAnnotation(AutoInjectable.class);
             field.setAccessible(true);
             if(annotation != null) {
-                String type = prop.getProperty()
+                String typeName = properties.getProperty(field.getType().getName());
+                Object classObject = Class.forName(typeName).newInstance();
+                field.set(obj, classObject);
             }
         }
-        return (T) newInstance;
+        return obj;
     }
 }
